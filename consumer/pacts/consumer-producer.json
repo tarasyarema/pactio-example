@@ -1,0 +1,29 @@
+{
+  "consumer": {
+    "name": "consumer"
+  },
+  "provider": {
+    "name": "producer"
+  },
+  "messages": [
+    {
+      "description": "a contract",
+      "providerStates": [
+
+      ],
+      "contents": {
+        "name": {
+          "contents": "2pac",
+          "json_class": "Pact::SomethingLike"
+        }
+      },
+      "matchingRules": {
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  }
+}
