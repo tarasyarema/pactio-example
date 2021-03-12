@@ -4,13 +4,17 @@ import {
   asynchronousBodyHandler,
 } from "@pact-foundation/pact"
 import path from "path"
-import { Contract, handleContract } from "../consumer"
+import { Contract, Address, handleContract } from "../consumer"
 
 describe("unit tests", function () {
   it("ok", async () => {
     const contract: Contract =  {
       name: 'some name',
       email: 'name@email.com',
+      address: {
+        street: 'Trafalgar',
+        number: 1337,
+      } as Address,
     }
 
     const response: boolean = await handleContract(contract)
@@ -39,6 +43,10 @@ describe("Pact.io test", () => {
       .withContent({
         name: Matchers.like("2pac"),
         email: Matchers.like("tupac@domain.com"),
+        address: {
+          street: Matchers.like("Trafalgar"),
+          number: Matchers.like(1337),
+        }
       })
       .verify(asynchronousBodyHandler(handleContract));
     });

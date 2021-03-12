@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	commit string = "v1.0.0"
+	commit string = "v2.0.0"
 	url    string
 	token  string
 )
@@ -84,13 +84,34 @@ func ProducerVersion() error {
 }
 
 // Checks if the consumer can deploy
-func CanIDeploy() error {
+func ConsumerCanIDeploy() error {
 	return sh.RunV(
 		"pact-broker",
 		"can-i-deploy",
 		"--pacticipant",
 		"consumer",
-		"-l",
+		"--version",
+		commit,
+		"--to",
+		"prod",
+		"--broker-base-url",
+		url,
+		"--broker-token",
+		token,
+	)
+}
+
+// Checks if the producer can deploy
+func ProducerCanIDeploy() error {
+	return sh.RunV(
+		"pact-broker",
+		"can-i-deploy",
+		"--pacticipant",
+		"producer",
+		"--version",
+		commit,
+		"--to",
+		"prod",
 		"--broker-base-url",
 		url,
 		"--broker-token",

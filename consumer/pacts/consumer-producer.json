@@ -19,6 +19,16 @@
         "email": {
           "contents": "tupac@domain.com",
           "json_class": "Pact::SomethingLike"
+        },
+        "address": {
+          "street": {
+            "contents": "Trafalgar",
+            "json_class": "Pact::SomethingLike"
+          },
+          "number": {
+            "contents": 1337,
+            "json_class": "Pact::SomethingLike"
+          }
         }
       },
       "matchingRules": {

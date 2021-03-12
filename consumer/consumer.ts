@@ -2,17 +2,20 @@
 type Contract = {
     name: string;
     email: string;
+    address: Address;
+}
+
+// Address is a new field added in v2
+type Address = {
+    street: string;
+    number: number;
 }
 
 // handleContract handles a contract
 const handleContract = async (contract: Contract): Promise<boolean> => {
     try {
-        const { name, email } = contract
-
-        if (name === undefined ||
-            email === undefined) {
-            throw "Bad contract"
-        }
+        const { name, email, address: { street, number } } = contract
+        console.log(name, email, street, number)
     } catch (_) {
         return false
     }
@@ -20,4 +23,4 @@ const handleContract = async (contract: Contract): Promise<boolean> => {
     return true
 }
 
-export { Contract, handleContract }
+export { Contract, Address, handleContract }

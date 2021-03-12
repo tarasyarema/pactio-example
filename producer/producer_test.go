@@ -12,7 +12,7 @@ import (
 
 var (
 	// these are pactflow related
-	version = "v1.0.0"
+	version = "v1.1.0"
 	tags    = []string{"prod"}
 
 	// Various configuration + test Data for local testing
