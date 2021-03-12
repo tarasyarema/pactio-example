@@ -3,9 +3,9 @@ const {
   MessageConsumerPact,
   asynchronousBodyHandler,
 } = require("@pact-foundation/pact");
-const { like, term } = Matchers;
+const { like } = Matchers;
 const path = require("path");
-const { handleContract } = require("../index")
+const { handleContract } = require("../consumer")
 
 describe("unit tests", function () {
     it("ok", async () => {
