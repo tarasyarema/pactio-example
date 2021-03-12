@@ -1,3 +1,5 @@
+all: test-consumer test-producer
+
 test-consumer:
 	cd consumer && yarn test
 
