@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/joho/godotenv"
@@ -10,10 +11,11 @@ import (
 )
 
 var (
-	// contracts is a global variable
-	contract *Contract
+	// these are pactflow related
+	version = "v1.0.0"
+	tags    = []string{"prod"}
 
-	// Various configuration + test Data
+	// Various configuration + test Data for local testing
 	dir, _  = os.Getwd()
 	pactDir = fmt.Sprintf("%s/../consumer/pacts", dir)
 	logDir  = fmt.Sprintf("%s/log", dir)
@@ -46,16 +48,42 @@ func createPact() dsl.Pact {
 	}
 }
 
-func TestProvider_Success(t *testing.T) {
+// TestProducerPactflow verify the Provider with pactflow.io pact files
+func TestProducerPactflow(t *testing.T) {
 	pact := createPact()
 
 	// Map test descriptions to message producer (handlers)
 	functionMappings := dsl.MessageHandlers{
 		"a contract": func(m dsl.Message) (interface{}, error) {
-			return &Contract{
-				Name:  stringToPtr("2pac Shakur"),
-				Email: stringToPtr("tupac@shakur.com"),
-			}, nil
+			return Handler()
+		},
+	}
+
+	stateMappings := dsl.StateHandlers{}
+
+	_, err := pact.VerifyMessageProvider(t, dsl.VerifyMessageRequest{
+		Tags:                       tags,
+		BrokerURL:                  url,
+		BrokerToken:                token,
+		PublishVerificationResults: true,
+		ProviderVersion:            version,
+		MessageHandlers:            functionMappings,
+		StateHandlers:              stateMappings,
+	})
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+// TestProducerLocal test against local contracts
+func TestProducerLocal(t *testing.T) {
+	pact := createPact()
+
+	// Map test descriptions to message producer (handlers)
+	functionMappings := dsl.MessageHandlers{
+		"a contract": func(m dsl.Message) (interface{}, error) {
+			return Handler()
 		},
 	}
 
@@ -63,15 +91,9 @@ func TestProvider_Success(t *testing.T) {
 
 	// Verify the Provider with pactflow.io Pact Files
 	_, err := pact.VerifyMessageProvider(t, dsl.VerifyMessageRequest{
-		// Use this if you want to test without the Pact Broker
-		// PactURLs:                   []string{filepath.ToSlash(fmt.Sprintf("%s/consumer-producer.json", pactDir))},
-		Tags:                       []string{"prod"},
-		BrokerURL:                  url,
-		BrokerToken:                token,
-		PublishVerificationResults: true,
-		ProviderVersion:            "v1.0.0",
-		MessageHandlers:            functionMappings,
-		StateHandlers:              stateMappings,
+		PactURLs:        []string{filepath.ToSlash(fmt.Sprintf("%s/consumer-producer.json", pactDir))},
+		MessageHandlers: functionMappings,
+		StateHandlers:   stateMappings,
 	})
 
 	if err != nil {

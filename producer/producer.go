@@ -22,9 +22,15 @@ func stringToPtr(s string) *string {
 	return &s
 }
 
-func main() {
-	name := "2pac Shakur"
-	email := "tupac@gvng.com"
+// Handler is the function that we want to test
+func Handler() (*Contract, error) {
+	return &Contract{
+		Name:  stringToPtr("2pac Shakur"),
+		Email: stringToPtr("tupac@shakur.com"),
+	}, nil
+}
 
-	fmt.Println(Contract{Name: &name, Email: &email})
+func main() {
+	c, _ := Handler()
+	fmt.Println(c)
 }
