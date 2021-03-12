@@ -15,6 +15,10 @@
         "name": {
           "contents": "2pac",
           "json_class": "Pact::SomethingLike"
+        },
+        "email": {
+          "contents": "tupac@domain.com",
+          "json_class": "Pact::SomethingLike"
         }
       },
       "matchingRules": {
