@@ -1,5 +1,5 @@
 run:
-	go run main.go
+	go run producer.go
 
 test:
 	go test -v -race -cover ./...
