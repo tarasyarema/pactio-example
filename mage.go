@@ -10,9 +10,11 @@ import (
 )
 
 var (
-	commit string = "v2.0.0"
-	url    string
-	token  string
+	consumerVersion string = "v2.0.0"
+	producerVersion string = "v1.1.0"
+
+	url   string
+	token string
 )
 
 func init() {
@@ -37,7 +39,7 @@ func Publish() error {
 		"publish",
 		"consumer/pacts",
 		"--consumer-app-version",
-		commit,
+		consumerVersion,
 		"--tag",
 		"prod",
 		"--broker-base-url",
@@ -55,7 +57,7 @@ func ConsumerVersion() error {
 		"--pacticipant",
 		"consumer",
 		"--version",
-		commit,
+		consumerVersion,
 		"--tag",
 		"prod",
 		"--broker-base-url",
@@ -73,7 +75,7 @@ func ProducerVersion() error {
 		"--pacticipant",
 		"producer",
 		"--version",
-		commit,
+		producerVersion,
 		"--tag",
 		"prod",
 		"--broker-base-url",
@@ -91,7 +93,7 @@ func ConsumerCanIDeploy() error {
 		"--pacticipant",
 		"consumer",
 		"--version",
-		commit,
+		consumerVersion,
 		"--to",
 		"prod",
 		"--broker-base-url",
@@ -109,7 +111,7 @@ func ProducerCanIDeploy() error {
 		"--pacticipant",
 		"producer",
 		"--version",
-		commit,
+		producerVersion,
 		"--to",
 		"prod",
 		"--broker-base-url",
