@@ -22,8 +22,11 @@ the commands directly.
 3. Install modules (may be not needed as it will auto-fetch on first test)
     ```bash
     cd producer
-    go get -d -v ./...
+    go mod download
     ```
+
+## Development flow
+
 
 ## Testing
 
