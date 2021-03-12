@@ -11,7 +11,7 @@ import (
 
 var (
 	consumerVersion string = "v2.0.0"
-	producerVersion string = "v1.1.0"
+	producerVersion string = "v1.2.0"
 
 	url   string
 	token string
